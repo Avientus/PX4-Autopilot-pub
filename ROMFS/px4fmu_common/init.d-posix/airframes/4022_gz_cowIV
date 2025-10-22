@@ -1,0 +1,245 @@
+#!/bin/sh
+#
+# @name Avientus CowIV VTOL Tailsitter
+#
+# @type Avientus VTOL Tailsitter
+#
+
+. ${R}etc/init.d/rc.vtol_defaults
+
+PX4_SIMULATOR=${PX4_SIMULATOR:=gz}
+PX4_GZ_WORLD=${PX4_GZ_WORLD:=default}
+PX4_SIM_MODEL=${PX4_SIM_MODEL:=cowIV}
+
+param set-default SIM_GZ_EN 1 # Gazebo bridge
+
+param set-default MAV_TYPE 20
+
+param set-default CA_AIRFRAME 4
+
+param set-default CA_ROTOR_COUNT 2
+param set-default CA_ROTOR0_PX 0.327
+param set-default CA_ROTOR0_PY 0.3
+param set-default CA_ROTOR0_KM 0.18
+param set-default CA_ROTOR1_PX 0.327
+param set-default CA_ROTOR1_PY -0.3
+param set-default CA_ROTOR1_KM -0.18
+
+param set-default CA_SV_CS_COUNT 4
+
+# Control Surface Configuration
+param set-default CA_SV_CS0_TYPE 1  # Elevator Left
+param set-default CA_SV_CS0_TRQ_P 1
+param set-default CA_SV_CS1_TYPE 1  # Elevator Right
+param set-default CA_SV_CS1_TRQ_P 1
+param set-default CA_SV_CS2_TYPE 2  # Aileron Left
+param set-default CA_SV_CS2_TRQ_R 1
+param set-default CA_SV_CS3_TYPE 2  # Aileron Right
+param set-default CA_SV_CS3_TRQ_R -1
+
+# Gazebo Control Surface Functions
+param set-default SIM_GZ_SV_FUNC1 201  # Elevator Left
+param set-default SIM_GZ_SV_FUNC2 202  # Elevator Right
+param set-default SIM_GZ_SV_FUNC3 203  # Aileron Left
+param set-default SIM_GZ_SV_FUNC4 204  # Aileron Right
+
+param set-default SIM_GZ_EC_FUNC1 101
+param set-default SIM_GZ_EC_FUNC2 102
+
+
+param set-default SIM_GZ_EC_MIN1 10
+param set-default SIM_GZ_EC_MIN2 10
+
+
+param set-default SIM_GZ_EC_MAX1 1900
+param set-default SIM_GZ_EC_MAX2 1900
+
+
+param set-default FD_FAIL_R 60
+
+
+param set-default FW_ACRO_X_MAX 90.0
+param set-default FW_ACRO_YAW_EN 0
+param set-default FW_ACRO_Y_MAX 90.0
+param set-default FW_ACRO_Z_MAX 45.0
+param set-default FW_AIRSPD_MAX 21.0
+param set-default FW_AIRSPD_MIN 10.0
+param set-default FW_AIRSPD_STALL 7.5
+param set-default FW_AIRSPD_TRIM 12.0
+param set-default FW_ARSP_SCALE_EN 1
+param set-default FW_AT_APPLY 2
+param set-default FW_AT_AXES 3
+param set-default FW_AT_MAN_AUX 1
+param set-default FW_AT_START 0
+# param set-default FW_AT_SYSID_AMP 1.0
+param set-default FW_AT_SYSID_F0 1.0
+param set-default FW_AT_SYSID_F1 20.0
+param set-default FW_AT_SYSID_TIME 10.0
+param set-default FW_AT_SYSID_TYPE 0
+param set-default FW_BAT_SCALE_EN 0
+param set-default FW_DTRIM_P_VMAX 0.0
+param set-default FW_DTRIM_P_VMIN 0.0
+param set-default FW_DTRIM_R_VMAX 0.0
+param set-default FW_DTRIM_R_VMIN 0.0
+param set-default FW_DTRIM_Y_VMAX 0.0
+param set-default FW_DTRIM_Y_VMIN 0.0
+param set-default FW_FLAPS_LND_SCL 1.0
+param set-default FW_FLAPS_TO_SCL 0.0
+param set-default FW_GND_SPD_MIN 5.0
+param set-default FW_GPSF_LT 30
+param set-default FW_GPSF_R 15.0
+param set-default FW_LAUN_AC_T 0.05000000074505806
+param set-default FW_LAUN_AC_THLD 30.0
+param set-default FW_LAUN_DETCN_ON 0
+param set-default FW_LAUN_MOT_DEL 0.0
+param set-default FW_LND_ABORT 3
+param set-default FW_LND_AIRSPD -1.0
+param set-default FW_LND_ANG 5.0
+param set-default FW_LND_EARLYCFG 0
+param set-default FW_LND_FLALT 0.5
+param set-default FW_LND_FL_PMAX 15.0
+param set-default FW_LND_FL_PMIN 2.5
+param set-default FW_LND_FL_SINK 0.25
+param set-default FW_LND_FL_TIME 1.0
+param set-default FW_LND_NUDGE 2
+param set-default FW_LND_TD_OFF 3.0
+param set-default FW_LND_TD_TIME -1.0
+param set-default FW_LND_THRTC_SC 1.0
+param set-default FW_LND_USETER 1
+param set-default FW_MAN_P_MAX 45.0
+param set-default FW_MAN_P_SC 1.0
+param set-default FW_MAN_R_MAX 55.0
+param set-default FW_MAN_R_SC 1.0
+param set-default FW_MAN_YR_MAX 90.0
+param set-default FW_MAN_Y_SC 1.0
+param set-default FW_PN_R_SLEW_MAX 90.0
+param set-default FW_POS_STK_CONF 2
+param set-default FW_PR_D 0.0
+param set-default FW_PR_FF 1.3552604913711548
+param set-default FW_PR_I 0.11978088319301605
+param set-default FW_PR_IMAX 0.4000000059604645
+param set-default FW_PR_P 0.11731206625699997
+param set-default FW_PSP_OFF 0.0
+param set-default FW_P_LIM_MAX 40.0
+param set-default FW_P_LIM_MIN -40.0
+param set-default FW_P_RMAX_NEG 60.0
+param set-default FW_P_RMAX_POS 60.0
+param set-default FW_P_TC 1.0
+param set-default FW_RLL_TO_YAW_FF 0.0
+param set-default FW_RR_D 0.0
+param set-default FW_RR_FF 0.4481363594532013
+param set-default FW_RR_I 0.12010706216096878
+param set-default FW_RR_IMAX 0.20000000298023224
+param set-default FW_RR_P 0.12058881670236588
+param set-default FW_R_LIM 50.0
+param set-default FW_R_RMAX 70.0
+param set-default FW_R_TC 0.5955676436424255
+param set-default FW_SERVICE_CEIL -1.0
+# param set-default FW_SPOILERS_DESC 0.0
+# param set-default FW_SPOILERS_LND 0.0
+# param set-default FW_SPOILERS_MAN 0
+param set-default FW_THR_ASPD_MAX 0.0
+param set-default FW_THR_ASPD_MIN 0.0
+param set-default FW_THR_IDLE 0.0
+param set-default FW_THR_MAX 0.5
+param set-default FW_THR_MIN 0.0
+param set-default FW_THR_SLEW_MAX 0.0
+param set-default FW_THR_TRIM 0.3499999940395355
+param set-default FW_TKO_AIRSPD -1.0
+param set-default FW_TKO_PITCH_MIN 10.0
+param set-default FW_T_ALT_TC 5.0
+param set-default FW_T_CLMB_MAX 10.0
+param set-default FW_T_CLMB_R_SP 5.0
+param set-default FW_T_HRATE_FF 0.30000001192092896
+param set-default FW_T_I_GAIN_PIT 0.10000000149011612
+param set-default FW_T_PTCH_DAMP 0.10000000149011612
+param set-default FW_T_RLL2THR 15.0
+param set-default FW_T_SEB_R_FF 1.0
+param set-default FW_T_SINK_MAX 7.0
+param set-default FW_T_SINK_MIN 2.0
+param set-default FW_T_SINK_R_SP 5.0
+param set-default FW_T_SPDWEIGHT 0.699999988079071
+param set-default FW_T_SPD_DEV_STD 0.20000000298023224
+param set-default FW_T_SPD_PRC_STD 0.20000000298023224
+param set-default FW_T_SPD_STD 0.07000000029802322
+param set-default FW_T_STE_R_TC 0.4000000059604645
+param set-default FW_T_TAS_TC 5.0
+param set-default FW_T_THR_DAMPING 0.05000000074505806
+param set-default FW_T_THR_INTEG 0.019999999552965164
+param set-default FW_T_VERT_ACC 7.0
+param set-default FW_USE_AIRSPD 1
+param set-default FW_WIND_ARSP_SC 0.0
+param set-default FW_WING_HEIGHT 0.5
+param set-default FW_WING_SPAN 3.0
+param set-default FW_WR_FF 0.20000000298023224
+param set-default FW_WR_I 0.10000000149011612
+param set-default FW_WR_IMAX 0.4000000059604645
+param set-default FW_WR_P 0.5
+param set-default FW_W_EN 0
+param set-default FW_W_RMAX 30.0
+param set-default FW_YR_D 0.0
+param set-default FW_YR_FF 0.30000001192092896
+param set-default FW_YR_I 0.10000000149011612
+param set-default FW_YR_IMAX 0.20000000298023224
+param set-default FW_YR_P 0.05000000074505806
+param set-default FW_Y_RMAX 50.0
+
+param set-default MC_ACRO_EXPO 0.0
+param set-default MC_ACRO_EXPO_Y 0.0
+param set-default MC_ACRO_P_MAX 100.0
+param set-default MC_ACRO_R_MAX 100.0
+param set-default MC_ACRO_SUPEXPO 0.0
+param set-default MC_ACRO_SUPEXPOY 0.0
+param set-default MC_ACRO_Y_MAX 100.0
+param set-default MC_AIRMODE 0
+param set-default MC_AT_EN 0
+param set-default MC_BAT_SCALE_EN 0
+param set-default MC_MAN_TILT_TAU 0.0
+param set-default MC_ORBIT_RAD_MAX 1000.0
+param set-default MC_PITCHRATE_D 0.007000000216066837
+param set-default MC_PITCHRATE_FF 0.0
+param set-default MC_PITCHRATE_I 0.20000000298023224
+param set-default MC_PITCHRATE_K 1.5
+param set-default MC_PITCHRATE_MAX 220.0
+param set-default MC_PITCHRATE_P 1.0
+param set-default MC_PITCH_P 2.0
+param set-default MC_PR_INT_LIM 0.30000001192092896
+param set-default MC_ROLLRATE_D 0.00800000037997961
+param set-default MC_ROLLRATE_FF 0.0
+param set-default MC_ROLLRATE_I 0.20000000298023224
+param set-default MC_ROLLRATE_K 1.5
+param set-default MC_ROLLRATE_MAX 120.0
+param set-default MC_ROLLRATE_P 1.0
+param set-default MC_ROLL_P 3.0
+param set-default MC_RR_INT_LIM 0.30000001192092896
+param set-default MC_SLOW_DEF_HVEL 3.0
+param set-default MC_SLOW_DEF_VVEL 1.0
+param set-default MC_SLOW_DEF_YAWR 45.0
+param set-default MC_SLOW_MAP_HVEL 0
+param set-default MC_SLOW_MAP_VVEL 0
+param set-default MC_SLOW_MAP_YAWR 0
+param set-default MC_SLOW_MIN_HVEL 0.30000001192092896
+param set-default MC_SLOW_MIN_VVEL 0.30000001192092896
+param set-default MC_SLOW_MIN_YAWR 3.0
+param set-default MC_YAWRATE_D 0.0
+param set-default MC_YAWRATE_FF 0.0
+param set-default MC_YAWRATE_I 0.10000000149011612
+param set-default MC_YAWRATE_K 1.0
+param set-default MC_YAWRATE_MAX 120.0
+param set-default MC_YAWRATE_P 1.0
+param set-default MC_YAW_P 2.0
+param set-default MC_YAW_WEIGHT 0.4000000059604645
+param set-default MC_YR_INT_LIM 0.30000001192092896
+
+
+param set-default VT_ARSP_TRANS 10.0
+param set-default VT_B_TRANS_DUR 5.0
+param set-default VT_FW_DIFTHR_EN 0
+param set-default VT_FW_DIFTHR_S_Y 0.10000000149011612
+param set-default VT_F_TRANS_DUR 5.0
+param set-default VT_TYPE 0
+
+param set-default WV_EN 0
+
+param set-default EKF2_FUSE_BETA 0
+

@@ -93,6 +93,7 @@ if(gazebo_FOUND)
 		plane_lidar
 		px4vision
 		quadtailsitter
+		cowIV
 		standard_vtol
 		standard_vtol_drop
 		tailsitter
